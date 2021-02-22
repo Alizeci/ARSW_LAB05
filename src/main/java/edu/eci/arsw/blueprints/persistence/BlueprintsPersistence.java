@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.bluesprints.persistence;
+package edu.eci.arsw.blueprints.persistence;
 
 import java.util.Set;
 
-import edu.eci.arsw.bluesprints.model.Blueprint;
+import edu.eci.arsw.blueprints.model.Blueprint;
 
 /**
  *
@@ -39,5 +39,20 @@ public interface BlueprintsPersistence {
     * @throws BlueprintNotFoundException if the given author doesn't exist
     */
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException;
+
+    /**
+     * @return set of all the blueprints
+     * @throws BlueprintNotFoundException if there are no such blueprints
+     */
+	public Set<Blueprint> getAllBlueprints() throws BlueprintNotFoundException;
+
+    /**
+     * 
+     * @param author blueprint's author
+     * @param name blueprint's name
+     * @param bp blueprint
+     * @throws BlueprintNotFoundException if the given author doesn't exist
+     */
+	public void changeData(String author, String bpname, Blueprint blueprint) throws BlueprintNotFoundException;
     
 }

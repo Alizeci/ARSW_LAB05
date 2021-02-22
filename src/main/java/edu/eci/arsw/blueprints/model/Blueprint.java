@@ -1,5 +1,5 @@
 
-package edu.eci.arsw.bluesprints.model;
+package edu.eci.arsw.blueprints.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,8 +20,8 @@ public class Blueprint {
         this.name=name;
         points=Arrays.asList(pnts);
     }
-         
-    public Blueprint(String author, String name){
+
+	public Blueprint(String author, String name){
         this.name=name;
         points=new ArrayList<>();
     }
@@ -32,10 +32,18 @@ public class Blueprint {
     public String getName() {
         return name;
     }
+   
+	public void setName(String name) {
+		this.name = name;
+	}
 
     public String getAuthor() {
         return author;
     }
+    
+    public void setAuthor(String author) {
+		this.author = author;
+	}
     
     public List<Point> getPoints() {
         return points;
@@ -85,7 +93,5 @@ public class Blueprint {
         
         return true;
     }
-    
-    
-    
+
 }

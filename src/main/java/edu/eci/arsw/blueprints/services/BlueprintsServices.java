@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.bluesprints.services;
+package edu.eci.arsw.blueprints.services;
 
 import edu.eci.arsw.blueprints.filter.BlueprintFilter;
-import edu.eci.arsw.bluesprints.model.Blueprint;
-import edu.eci.arsw.bluesprints.persistence.BlueprintNotFoundException;
-import edu.eci.arsw.bluesprints.persistence.BlueprintPersistenceException;
-import edu.eci.arsw.bluesprints.persistence.BlueprintsPersistence;
+import edu.eci.arsw.blueprints.model.Blueprint;
+import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
+import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
+import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +30,7 @@ public class BlueprintsServices {
     @Autowired
     @Qualifier("SubsamplingBlueprintFilter")
     BlueprintFilter rf;
+    
     /**
      * 
      * @param bp blueprint
@@ -40,8 +41,12 @@ public class BlueprintsServices {
         
     }
     
-    public Set<Blueprint> getAllBlueprints(){
-        return null;
+    /**
+     * @return set of all the blueprints
+     * @throws BlueprintNotFoundException if there are no such blueprints
+     */
+    public Set<Blueprint> getAllBlueprints() throws BlueprintNotFoundException{
+        return bpp.getAllBlueprints();
     }
     
     /**
@@ -51,7 +56,7 @@ public class BlueprintsServices {
      * @return the blueprint of the given name created by the given author
      * @throws BlueprintNotFoundException if there is no such blueprint
      */
-    public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException, NullPointerException{
+    public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException {
         return rf.reduceSize(bpp.getBlueprint(author, name));
     }
     
@@ -64,5 +69,16 @@ public class BlueprintsServices {
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
     	return rf.reduceSize(bpp.getBlueprintsByAuthor(author)); 
     }
+
+    /**
+     * 
+     * @param author blueprint's author
+     * @param name blueprint's name
+     * @param bp blueprint
+     * @throws BlueprintNotFoundException if the given author doesn't exist
+     */
+	public void updateBlueprint(String author, String bpname, Blueprint blueprint) throws BlueprintNotFoundException {
+		bpp.changeData(author,bpname,blueprint);
+	}
     
 }

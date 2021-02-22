@@ -1,4 +1,4 @@
-package edu.eci.arsw.bluesprints.filter.impl;
+package edu.eci.arsw.blueprints.filter.impl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,8 +7,8 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 import edu.eci.arsw.blueprints.filter.BlueprintFilter;
-import edu.eci.arsw.bluesprints.model.Blueprint;
-import edu.eci.arsw.bluesprints.model.Point;
+import edu.eci.arsw.blueprints.model.Blueprint;
+import edu.eci.arsw.blueprints.model.Point;
 
 @Component("SubsamplingBlueprintFilter")
 public class SubsamplingBlueprintFilter implements BlueprintFilter{

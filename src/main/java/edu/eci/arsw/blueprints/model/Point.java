@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.bluesprints.model;
+package edu.eci.arsw.blueprints.model;
 
 /**
  *
@@ -37,7 +37,5 @@ public class Point {
     public void setY(int y) {
         this.y = y;
     }
-    
-    
-    
+  
 }

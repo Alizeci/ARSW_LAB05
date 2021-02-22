@@ -3,20 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.eci.arsw.bluesprints.persistence.impl;
+package edu.eci.arsw.blueprints.persistence.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
-import edu.eci.arsw.bluesprints.model.Blueprint;
-import edu.eci.arsw.bluesprints.model.Point;
-import edu.eci.arsw.bluesprints.persistence.BlueprintNotFoundException;
-import edu.eci.arsw.bluesprints.persistence.BlueprintPersistenceException;
-import edu.eci.arsw.bluesprints.persistence.BlueprintsPersistence;
+import edu.eci.arsw.blueprints.model.Blueprint;
+import edu.eci.arsw.blueprints.model.Point;
+import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
+import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
+import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 
 /**
  *
@@ -27,7 +29,7 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
 
     private final Map<Tuple<String,String>,Blueprint> blueprints=new HashMap<>();
 
-    public InMemoryBlueprintPersistence() {
+	public InMemoryBlueprintPersistence() {
         //load stub data
         Point[] pts=new Point[]{new Point(140, 140),new Point(115, 115)};
         Blueprint bp=new Blueprint("Pedro", "thepicapiedra",pts);
@@ -57,21 +59,42 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
     }
 
     @Override
-    public Blueprint getBlueprint(String author, String bprintname) throws BlueprintNotFoundException, NullPointerException {
+    public Blueprint getBlueprint(String author, String bprintname) throws BlueprintNotFoundException {
+    	
+    	if ((blueprints.get(new Tuple<>(author, bprintname)) == null)) {
+    		throw new BlueprintNotFoundException("The author "+author+" & name "+bprintname+" not exist.");
+    	}
         return blueprints.get(new Tuple<>(author, bprintname));
     }
     
     @Override
     public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
     	Set<Blueprint> bluePrintsByAuthor = new HashSet<Blueprint>();
+    	
     	for (Tuple<String,String> bps : blueprints.keySet()) {
-    		if (bps.getElem1().equals(author)) {
-    			bluePrintsByAuthor.add(blueprints.get(bps));
-    		}
+			if (bps.getElem1().equals(author)) {
+				bluePrintsByAuthor.add(blueprints.get(bps));
+			}
+		}
+    	
+    	if (bluePrintsByAuthor.isEmpty()) {
+    		throw new BlueprintNotFoundException("The author "+author+" not exist.");
     	}
     	return bluePrintsByAuthor;
     }
     
-    
-    
+    @Override
+    public Set<Blueprint> getAllBlueprints() throws BlueprintNotFoundException {
+    	Set<Blueprint> allBlueprints = new HashSet<Blueprint>();
+	    
+    	if(blueprints.isEmpty()) {
+			throw new BlueprintNotFoundException("The blueprints Stub is empty");
+		} else {
+	    	for (Tuple<String,String> bps : blueprints.keySet()) {
+	    		allBlueprints.add(blueprints.get(bps));
+	    	}
+		}
+		return allBlueprints;
+	}
+
 }
