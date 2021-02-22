@@ -1,0 +1,13 @@
+CONDICIONES DE CARRERA
+- Un usuario podría insertar, modificar y/o consultar los planos mientras otro al mismo tiempo podría estar realizando las mismas operaciones lo que ocasionaría que no 
+se tenga la información correcta en tiempo real.
+
+REGIONES CRÍTICAS
+- Las operaciones sobre el HashMap de los planos.
+
+SOLUCIÓN APLICADA
+- Se cambió el tipo de map que tenian los planos a ConcurrentHashMap ya que admite concurrencia total sobre los accesos y una alta concurrencia para las actualizaciones.
+
+
+
+
