@@ -97,4 +97,13 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
 		return allBlueprints;
 	}
 
+	@Override
+	public void changeData(String author, String bpname, Blueprint blueprint) throws BlueprintNotFoundException {
+		List<Point> newPoints = blueprint.getPoints();
+		for (Tuple<String,String> bps : blueprints.keySet()) {
+			if (bps.getElem1().equals(author) && bps.getElem2().equals(bpname) ) {
+				blueprints.get(bps).setPoints(newPoints);
+			}
+		}
+	}
 }

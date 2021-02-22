@@ -94,9 +94,9 @@ public class InMemoryPersistenceTest {
     public void getBlueprintsByAuthor() {
         InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
         
-        Point[] pts=new Point[]{new Point(0, 0),new Point(15, 15)};
-        Blueprint bp=new Blueprint("Alejandra", "thepapa",pts);
         
+        Point[] pts=new Point[]{new Point(0, 0),new Point(15, 15)};
+        Blueprint bp=new Blueprint("Juan", "theeci",pts);
         try {
             ibpp.getBlueprintsByAuthor(bp.getAuthor());
         } catch (BlueprintNotFoundException ex) {
@@ -107,10 +107,33 @@ public class InMemoryPersistenceTest {
         Blueprint bp2=new Blueprint("Maria", "thepepe",pts2);
 
         try {
+            ibpp.saveBlueprint(bp2);
             ibpp.getBlueprintsByAuthor(bp2.getAuthor());
-        } catch (BlueprintNotFoundException ex) {
+        } catch (BlueprintNotFoundException | BlueprintPersistenceException ex) {
             fail("Blueprint not found");
         }          
         
+    }
+    
+    @Test
+    public void updatePointsTest() throws BlueprintPersistenceException, BlueprintNotFoundException{
+        InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
+
+        Point[] pts0=new Point[]{new Point(40, 40),new Point(15, 15)};
+        Blueprint bp0=new Blueprint("Wonkas", "thefactorys",pts0);
+        
+        ibpp.saveBlueprint(bp0);
+        
+        int v2 = ibpp.getBlueprint("Wonkas", "thefactorys").getPoints().size();
+        
+        assertTrue(v2 == 2); 
+        
+        Point[] pts1=new Point[]{new Point(20, 20),new Point(5, 5),new Point(50, 50)};
+        Blueprint bp1=new Blueprint("Wonkas", "thefactorys",pts1);
+        ibpp.changeData("Wonkas", "thefactorys",bp1);
+        
+        int v = ibpp.getBlueprint("Wonkas", "thefactorys").getPoints().size();
+        
+        assertTrue(v == 3); 
     }
 }
